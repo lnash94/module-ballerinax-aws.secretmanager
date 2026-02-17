@@ -57,7 +57,10 @@ public record ConnectionConfig(Region region, AuthConfig auth) {
         if (authConfig instanceof BMap) {
             return new StaticAuthConfig((BMap<BString, Object>) authConfig);
         }
-        return new AuthConfig() {
-        };
+        if (authConfig instanceof BString authStr
+                && "ECS_CONTAINER_ROLE".equals(authStr.getValue())) {
+            return AuthConfig.IamRoleAuthType.ECS_CONTAINER_ROLE;
+        }
+        return AuthConfig.IamRoleAuthType.EC2_IAM_ROLE;
     }
 }

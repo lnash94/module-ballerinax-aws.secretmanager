@@ -22,4 +22,12 @@ package io.ballerina.lib.aws.secretmanager;
  * {@code AuthConfig} represents authentication related configurations for AWS secret manager.
  */
 public interface AuthConfig {
+
+    /**
+     * Represents the IAM role based authentication types.
+     */
+    enum IamRoleAuthType implements AuthConfig {
+        EC2_IAM_ROLE,
+        ECS_CONTAINER_ROLE
+    }
 }

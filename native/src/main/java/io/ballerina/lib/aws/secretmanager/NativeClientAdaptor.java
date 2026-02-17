@@ -26,6 +26,7 @@ import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.AwsSessionCredentials;
+import software.amazon.awssdk.auth.credentials.ContainerCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.InstanceProfileCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
@@ -82,6 +83,9 @@ public class NativeClientAdaptor {
                             staticAuth.accessKeyId(), staticAuth.secretAccessKey(), staticAuth.sessionToken()) :
                     AwsBasicCredentials.create(staticAuth.accessKeyId(), staticAuth.secretAccessKey());
             return StaticCredentialsProvider.create(credentials);
+        }
+        if (auth == AuthConfig.IamRoleAuthType.ECS_CONTAINER_ROLE) {
+            return ContainerCredentialsProvider.builder().build();
         }
         return InstanceProfileCredentialsProvider.create();
     }

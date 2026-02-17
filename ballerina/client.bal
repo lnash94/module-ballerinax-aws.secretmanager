@@ -27,6 +27,11 @@ public isolated client class Client {
     #   secretAccessKey: "<aws-secret-key>"
     # });
     # ```
+    # Or using ECS/Fargate container credentials:
+    # ```ballerina
+    # secretmanager:Client secretmanager = check new(region = secretmanager:US_EAST_1,
+    #   auth = secretmanager:ECS_CONTAINER_ROLE);
+    # ```
     #
     # + configs - The AWS Secret Manager client configurations
     # + return - The `secretmanager:Client` or a `secretmanager:Error` if the initialization failed
